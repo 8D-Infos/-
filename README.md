@@ -80,12 +80,12 @@
             <ul>
                 <!-- Hier kannst du Hausaufgaben hinzufügen -->
                 <li>Folgen</li>
-              
+              <li> Ich Paul Nehme Keine Haftung für Vergessene Ha´s oder ähnliches auf mir die website ist nur als anschau project erreichbar 
+    für abgesicherte ifnos siehe : https://www.sks-voelkerfreundschaft.bildung-lsa.de/ </li> 
             </ul>
         </div>
 
     </div>
-<li> Ich Paul Nehme Keine Haftung für Vergessene Ha´s oder ähnliches auf mir die website ist nur als anschau project erreichbar 
-    für abgesicherte ifnos siehe : https://www.sks-voelkerfreundschaft.bildung-lsa.de/ </li> 
+
 </body>
 </html>
