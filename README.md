@@ -104,6 +104,7 @@
             <li>Wörter im Wörterbuch nachschlagen</li>
             <li>Aufgaben 2b beantworten</li>
             <li>Highlights des Schuljahres (Task 3a, Seite 39)</li>
+            <li>19 Arbeitsheft nummer 4</li>
         </ul>
 
         <p class="fach">💼 Wirtschaft</p>
