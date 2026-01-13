@@ -81,7 +81,7 @@
 
     <h1>📘 8D Infos</h1>
     <p class="beschreibung">
-        Hier findest du Hausaufgaben, wichtige Infos und Links.
+        Hier findest du Hausaufgaben, wichtige Infos und Links und mehr.
     </p>
 
     <!-- Wichtige Infos -->
