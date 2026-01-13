@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -94,7 +94,7 @@
                 Weitere Infos in der pCloud.
             </li>
             <li>
-                Ferien in: <span id="ferien-timer" class="timer">Lade...</span>
+                Ferien in: <span id="ferien-timer" class="timer">Lade…</span>
             </li>
             <li>Hausaufgaben siehe Abschnitt „Hausaufgaben“.</li>
         </ul>
@@ -174,66 +174,65 @@
 
 </div>
 
-<!-- 🔥 LIVE FERIEN TIMER SACHSEN-ANHALT -->
+<!-- ✅ OPTIMIERTER FERIEN-TIMER -->
 <script>
-    const timerEl = document.getElementById("ferien-timer");
+const timerEl = document.getElementById("ferien-timer");
+let ferien = [];
 
-    async function loadFerien() {
-        const year = new Date().getFullYear();
+async function loadFerien() {
+    const year = new Date().getFullYear();
 
-        try {
-            const response = await fetch(
-                `https://ferien-api.de/api/v1/holidays/SA/${year}`
-            );
-            const data = await response.json();
+    try {
+        const res = await fetch(`https://ferien-api.de/api/v1/holidays/SA/${year}`);
+        const data = await res.json();
 
-            return data.map(f => ({
+        ferien = data
+            .map(f => ({
                 name: f.name,
                 start: new Date(f.start),
                 end: new Date(f.end + "T23:59:59")
-            }));
-        } catch (e) {
-            console.error("Ferien-API konnte nicht geladen werden:", e);
-            timerEl.textContent = "Ferien-Informationen nicht verfügbar";
-            return [];
-        }
+            }))
+            .sort((a, b) => a.start - b.start);
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+    } catch (e) {
+        console.error(e);
+        timerEl.textContent = "Ferien nicht verfügbar";
     }
+}
 
-    function updateTimer(ferien) {
-        const now = new Date();
+function updateTimer() {
+    const now = new Date();
 
-        for (const f of ferien) {
-            if (now >= f.start && now <= f.end) {
-                timerEl.textContent = `🎉 ${f.name} haben begonnen!`;
-                return;
-            }
+    const relevanteFerien = ferien.filter(f => f.end >= now);
 
-            if (now < f.start) {
-                const diff = f.start - now;
-
-                const tage = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const stunden = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const minuten = Math.floor((diff / (1000 * 60)) % 60);
-                const sekunden = Math.floor((diff / 1000) % 60);
-
-                timerEl.textContent =
-                    `${tage} Tage, ${stunden} Std, ${minuten} Min, ${sekunden} Sek`;
-                return;
-            }
-        }
-
+    if (relevanteFerien.length === 0) {
         timerEl.textContent = "Keine weiteren Ferien gefunden.";
+        return;
     }
 
-    async function startTimer() {
-        const ferien = await loadFerien();
-        updateTimer(ferien);
-        setInterval(() => updateTimer(ferien), 1000);
+    const f = relevanteFerien[0];
+
+    if (now >= f.start && now <= f.end) {
+        timerEl.textContent = `🎉 ${f.name} haben begonnen!`;
+        return;
     }
 
-    startTimer();
+    const diff = f.start - now;
+
+    const tage = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const stunden = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minuten = Math.floor((diff / (1000 * 60)) % 60);
+    const sekunden = Math.floor((diff / 1000) % 60);
+
+    timerEl.textContent =
+        `${tage} Tage, ${stunden} Std, ${minuten} Min, ${sekunden} Sek`;
+}
+
+loadFerien();
 </script>
 
 </body>
 </html>
-
