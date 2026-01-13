@@ -68,6 +68,11 @@
             font-size: 13px;
             color: #666;
         }
+
+        .timer {
+            font-weight: bold;
+            color: #d35400;
+        }
     </style>
 </head>
 <body>
@@ -88,7 +93,9 @@
                 Aufgrund starken Wettergeschehens fällt die Schule aus.<br>
                 Weitere Infos in der pCloud.
             </li>
-            <li>Ferien in <strong>2 Wochen und 5 Tagen</strong>.</li>
+            <li>
+                Ferien in: <span id="ferien-timer" class="timer">Lade...</span>
+            </li>
             <li>Hausaufgaben siehe Abschnitt „Hausaufgaben“.</li>
         </ul>
     </div>
@@ -104,7 +111,7 @@
             <li>Wörter im Wörterbuch nachschlagen</li>
             <li>Aufgaben 2b beantworten</li>
             <li>Highlights des Schuljahres (Task 3a, Seite 39)</li>
-            <li>19 Arbeitsheft nummer 4</li>
+            <li>Arbeitsheft Seite 19, Nummer 4</li>
         </ul>
 
         <p class="fach">💼 Wirtschaft</p>
@@ -133,18 +140,99 @@
             <li>Lehrbuch Seite 61 – Infotext abschreiben</li>
             <li>Lehrbuch Seite 60 – Beispiel Nr. 1 mit Lösung</li>
         </ul>
+    </div>
 
+    <!-- Externe Links -->
+    <div class="box">
+        <h2>🔗 Externe Links</h2>
+        <ul>
+            <li>
+                📁 <strong>pCloud (Aufgaben & Dateien):</strong>
+                <a href="https://e.pcloud.link/publink/show?code=kZ8KugZPx6jOPfKhFm57MtA4Y3zdyY0jclX#/login?folder=12151147506">
+                    Zum Ordner
+                </a>
+            </li>
+            <li>
+                🏫 <strong>Schulhomepage:</strong>
+                <a href="https://www.sks-voelkerfreundschaft.bildung-lsa.de/">
+                    sks-voelkerfreundschaft.bildung-lsa.de
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Hinweis -->
+    <div class="box">
         <p class="hinweis">
-            Ich, Paul, übernehme keine Haftung für vergessene Hausaufgaben.<br>
-            Die Website dient nur als Anschauungsprojekt.<br>
-            Offizielle Infos:
-            <a href="https://www.sks-voelkerfreundschaft.bildung-lsa.de/">
-                Schulwebsite
-            </a>
+            Hinweis: Diese Website ist ein privates Anschauungsprojekt.<br>
+            Es wird keine Haftung übernommen für vergessene Arbeitsmittel,
+            fehlerhafte oder unvollständige Informationen.<br>
+            Verbindliche Informationen findest du ausschließlich
+            auf der offiziellen Schulhomepage.
         </p>
     </div>
 
 </div>
+
+<!-- 🔥 LIVE FERIEN TIMER SACHSEN-ANHALT -->
+<script>
+    const timerEl = document.getElementById("ferien-timer");
+
+    async function loadFerien() {
+        const year = new Date().getFullYear();
+
+        try {
+            const response = await fetch(
+                `https://ferien-api.de/api/v1/holidays/SA/${year}`
+            );
+            const data = await response.json();
+
+            return data.map(f => ({
+                name: f.name,
+                start: new Date(f.start),
+                end: new Date(f.end + "T23:59:59")
+            }));
+        } catch (e) {
+            console.error("Ferien-API konnte nicht geladen werden:", e);
+            timerEl.textContent = "Ferien-Informationen nicht verfügbar";
+            return [];
+        }
+    }
+
+    function updateTimer(ferien) {
+        const now = new Date();
+
+        for (const f of ferien) {
+            if (now >= f.start && now <= f.end) {
+                timerEl.textContent = `🎉 ${f.name} haben begonnen!`;
+                return;
+            }
+
+            if (now < f.start) {
+                const diff = f.start - now;
+
+                const tage = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const stunden = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minuten = Math.floor((diff / (1000 * 60)) % 60);
+                const sekunden = Math.floor((diff / 1000) % 60);
+
+                timerEl.textContent =
+                    `${tage} Tage, ${stunden} Std, ${minuten} Min, ${sekunden} Sek`;
+                return;
+            }
+        }
+
+        timerEl.textContent = "Keine weiteren Ferien gefunden.";
+    }
+
+    async function startTimer() {
+        const ferien = await loadFerien();
+        updateTimer(ferien);
+        setInterval(() => updateTimer(ferien), 1000);
+    }
+
+    startTimer();
+</script>
 
 </body>
 </html>
