@@ -174,59 +174,27 @@
 
 </div>
 
-<!-- ✅ KORRIGIERTER FERIEN-TIMER (JAHRESÜBERGREIFEND) -->
+<!-- ✅ EINFACHER TIMER BIS ZUM 31. 00:00 -->
 <script>
 const timerEl = document.getElementById("ferien-timer");
-let ferien = [];
-
-async function fetchFerien(year) {
-    const res = await fetch(`https://ferien-api.de/api/v1/holidays/SA/${year}`);
-    return await res.json();
-}
-
-async function loadFerien() {
-    const now = new Date();
-    const year = now.getFullYear();
-
-    try {
-        const [thisYear, nextYear] = await Promise.all([
-            fetchFerien(year),
-            fetchFerien(year + 1)
-        ]);
-
-        ferien = [...thisYear, ...nextYear]
-            .map(f => ({
-                name: f.name,
-                start: new Date(f.start),
-                end: new Date(f.end + "T23:59:59")
-            }))
-            .sort((a, b) => a.start - b.start);
-
-        updateTimer();
-        setInterval(updateTimer, 1000);
-    } catch (e) {
-        console.error(e);
-        timerEl.textContent = "Ferien nicht verfügbar";
-    }
-}
 
 function updateTimer() {
     const now = new Date();
-    const relevanteFerien = ferien.filter(f => f.end >= now);
 
-    if (relevanteFerien.length === 0) {
-        timerEl.textContent = "Keine weiteren Ferien gefunden.";
+    // Ziel: 31. dieses Monats um 00:00
+    const target = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        31,
+        0, 0, 0
+    );
+
+    const diff = target - now;
+
+    if (diff <= 0) {
+        timerEl.textContent = "🎉 Ferienbeginn!";
         return;
     }
-
-    const f = relevanteFerien[0];
-
-    if (now >= f.start && now <= f.end) {
-        timerEl.textContent = `🎉 ${f.name} haben begonnen!`;
-        return;
-    }
-
-    const diff = f.start - now;
 
     const tage = Math.floor(diff / (1000 * 60 * 60 * 24));
     const stunden = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -237,7 +205,8 @@ function updateTimer() {
         `${tage} Tage, ${stunden} Std, ${minuten} Min, ${sekunden} Sek`;
 }
 
-loadFerien();
+updateTimer();
+setInterval(updateTimer, 1000);
 </script>
 
 </body>
