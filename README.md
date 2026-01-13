@@ -13,18 +13,20 @@
         }
 
         .container {
+            max-width: 800px;
+            margin: auto;
             padding: 15px;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .beschreibung {
             text-align: center;
             margin-bottom: 20px;
-            color: #333;
+            color: #444;
         }
 
         .box {
@@ -47,71 +49,102 @@
         li {
             margin-bottom: 8px;
         }
+
+        .fach {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .hinweis {
+            font-size: 13px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- Überschrift -->
-        <h1>--8D Infos--</h1>
+    <h1>📘 8D Infos</h1>
+    <p class="beschreibung">
+        Hier findest du Hausaufgaben, wichtige Infos und Links.
+    </p>
 
-        <!-- Beschreibung -->
-        <p class="beschreibung">
-            Hier findest du Hausaufgaben und vieles mehr.
-        </p>
-
-        <!-- Wichtige Infos -->
-        <div class="box">
-            <h2>📌 Wichtige Infos</h2>
-            <ul>
-                <!-- Hier kannst du neue Infos hinzufügen -->
-                <li> Schulausfall Am 13.07.2026 
-      
-      Aufgrund Starken Wettergeschehens fällt die sSchule aus Weiter Infos in der pcloud </li>
-                <li> Ferien In 2 Wochen und 5 Tagen.</li>
-                 <li> Homework aufgaben siehe hausaufgaben</li>
-</li>
-            </ul>
-        </div>
-
-        <!-- Hausaufgaben -->
-        <div class="box">
-            <h2>📚 Hausaufgaben</h2>
-            <ul>
-                <!-- Hier kannst du Hausaufgaben hinzufügen -->
-                <li>Englisch
-                >Books 39 and note down words that you do not know into your folders 
-                > Look up the wordsin a dictionary 
-                >Answer the questions in task 2b 
-                >not down highlights of your school year here in germany at Völkerfreundschaft (task 3a page 39) 
-                -----wirtschaft-----
-                https://e.pcloud.link/publink/show?code=kZ8KugZPx6jOPfKhFm57MtA4Y3zdyY0jclX#/login?folder=13637671092 </li>
-
-                ^
-                dort einfach auf aufgabe pdf drücken 
-
-                ------Deutsch-----
-
-                https://e.pcloud.link/publink/show?code=kZ8KugZPx6jOPfKhFm57MtA4Y3zdyY0jclX#/login?folder=12151147586 
-
-
-                ^
-                dort einfach auf aufgabe pdf drücken 
-
-                ----Mathe---- 
-
-                > im hefter überschrift : Oberflächeninhalt Prisma 
-
-                > Lb. S. 61 Infotext abschreiben 
-
-                > Lbs. S. 60 Bsp Nr1 mit Lösung  <li>
-              <li> Ich Paul Nehme Keine Haftung für Vergessene Ha´s oder ähnliches auf mir die website ist nur als anschau project erreichbar 
-    für abgesicherte ifnos siehe : https://www.sks-voelkerfreundschaft.bildung-lsa.de/ </li> 
-            </ul>
-        </div>
-
+    <!-- Wichtige Infos -->
+    <div class="box">
+        <h2>📌 Wichtige Infos</h2>
+        <ul>
+            <li>
+                <strong>Schulausfall am 13.07.2026</strong><br>
+                Aufgrund starken Wettergeschehens fällt die Schule aus.<br>
+                Weitere Infos in der pCloud.
+            </li>
+            <li>Ferien in <strong>2 Wochen und 5 Tagen</strong>.</li>
+            <li>Hausaufgaben siehe Abschnitt „Hausaufgaben“.</li>
+        </ul>
     </div>
+
+    <!-- Hausaufgaben -->
+    <div class="box">
+        <h2>📚 Hausaufgaben</h2>
+
+        <p class="fach">🇬🇧 Englisch</p>
+        <ul>
+            <li>Buch Seite 39 lesen</li>
+            <li>Unbekannte Wörter ins Heft schreiben</li>
+            <li>Wörter im Wörterbuch nachschlagen</li>
+            <li>Aufgaben 2b beantworten</li>
+            <li>Highlights des Schuljahres (Task 3a, Seite 39)</li>
+        </ul>
+
+        <p class="fach">💼 Wirtschaft</p>
+        <ul>
+            <li>
+                Aufgaben als PDF:
+                <a href="https://e.pcloud.link/publink/show?code=kZ8KugZPx6jOPfKhFm57MtA4Y3zdyY0jclX#/login?folder=13637671092">
+                    pCloud öffnen
+                </a>
+            </li>
+        </ul>
+
+        <p class="fach">🇩🇪 Deutsch</p>
+        <ul>
+            <li>
+                Aufgaben als PDF:
+                <a href="https://e.pcloud.link/publink/show?code=kZ8KugZPx6jOPfKhFm57MtA4Y3zdyY0jclX#/login?folder=12151147586">
+                    pCloud öffnen
+                </a>
+            </li>
+        </ul>
+
+        <p class="fach">➗ Mathe</p>
+        <ul>
+            <li>Überschrift im Heft: <strong>Oberflächeninhalt Prisma</strong></li>
+            <li>Lehrbuch Seite 61 – Infotext abschreiben</li>
+            <li>Lehrbuch Seite 60 – Beispiel Nr. 1 mit Lösung</li>
+        </ul>
+
+        <p class="hinweis">
+            Ich, Paul, übernehme keine Haftung für vergessene Hausaufgaben.<br>
+            Die Website dient nur als Anschauungsprojekt.<br>
+            Offizielle Infos:
+            <a href="https://www.sks-voelkerfreundschaft.bildung-lsa.de/">
+                Schulwebsite
+            </a>
+        </p>
+    </div>
+
+</div>
 
 </body>
 </html>
+
