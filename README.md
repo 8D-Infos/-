@@ -174,19 +174,27 @@
 
 </div>
 
-<!-- ✅ OPTIMIERTER FERIEN-TIMER -->
+<!-- ✅ KORRIGIERTER FERIEN-TIMER (JAHRESÜBERGREIFEND) -->
 <script>
 const timerEl = document.getElementById("ferien-timer");
 let ferien = [];
 
+async function fetchFerien(year) {
+    const res = await fetch(`https://ferien-api.de/api/v1/holidays/SA/${year}`);
+    return await res.json();
+}
+
 async function loadFerien() {
-    const year = new Date().getFullYear();
+    const now = new Date();
+    const year = now.getFullYear();
 
     try {
-        const res = await fetch(`https://ferien-api.de/api/v1/holidays/SA/${year}`);
-        const data = await res.json();
+        const [thisYear, nextYear] = await Promise.all([
+            fetchFerien(year),
+            fetchFerien(year + 1)
+        ]);
 
-        ferien = data
+        ferien = [...thisYear, ...nextYear]
             .map(f => ({
                 name: f.name,
                 start: new Date(f.start),
@@ -196,7 +204,6 @@ async function loadFerien() {
 
         updateTimer();
         setInterval(updateTimer, 1000);
-
     } catch (e) {
         console.error(e);
         timerEl.textContent = "Ferien nicht verfügbar";
@@ -205,7 +212,6 @@ async function loadFerien() {
 
 function updateTimer() {
     const now = new Date();
-
     const relevanteFerien = ferien.filter(f => f.end >= now);
 
     if (relevanteFerien.length === 0) {
